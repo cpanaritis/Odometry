@@ -12,13 +12,13 @@ import lejos.hardware.port.Port;
 public class OdometryLab {
 
   private static final EV3LargeRegulatedMotor leftMotor =
-      new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
+      new EV3LargeRegulatedMotor(LocalEV3.get().getPort("C"));
   
   private static final EV3LargeRegulatedMotor rightMotor =
-      new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
+      new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
 
-  public static final double WHEEL_RADIUS = 2.1;
-  public static final double TRACK = 12.5;
+  public static final double WHEEL_RADIUS = 2.40;
+  public static final double TRACK = 15.01;
 
   public static void main(String[] args) {
     int buttonChoice;
