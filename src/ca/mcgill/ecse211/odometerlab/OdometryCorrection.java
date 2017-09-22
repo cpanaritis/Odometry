@@ -29,10 +29,11 @@ public class OdometryCorrection extends Thread {
       correctionStart = System.currentTimeMillis();
       //TODO Place correction implementation here
       lightSensor.fetchSample(LData, 0); // Get data from color sensor
+      
+      if (LData[0] != 13) {	//makes a sound when its not a regular tile (very primitive only used
+  	  	Sound.beep();		//for testing.
+    }
       System.out.println(LData[0]);
-      if (LData[0] != 13) {
-    	  	Sound.beep();
-      }
       
       // this ensure the odometry correction occurs only once every period
       correctionEnd = System.currentTimeMillis();
