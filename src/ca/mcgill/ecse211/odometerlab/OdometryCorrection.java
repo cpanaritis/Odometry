@@ -5,6 +5,7 @@ package ca.mcgill.ecse211.odometerlab;
 
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
+import lejos.hardware.*;
 
 public class OdometryCorrection extends Thread {
   private static final long CORRECTION_PERIOD = 10;
@@ -29,6 +30,10 @@ public class OdometryCorrection extends Thread {
       //TODO Place correction implementation here
       lightSensor.fetchSample(LData, 0); // Get data from color sensor
       System.out.println(LData[0]);
+      if (LData[0] != 13) {
+    	  	Sound.beep();
+      }
+      
       // this ensure the odometry correction occurs only once every period
       correctionEnd = System.currentTimeMillis();
       
