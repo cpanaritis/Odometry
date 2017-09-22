@@ -70,7 +70,7 @@ public class OdometryLab {
       odometer.start();
       odometryDisplay.start();
       
-      if(buttonChoice != Button.ID_RIGHT){
+      if (buttonChoice == Button.ID_RIGHT) {
         odometryCorrection.start();
       }
       
