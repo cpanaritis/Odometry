@@ -17,16 +17,10 @@ public class OdometryLab {
   
   private static final EV3LargeRegulatedMotor rightMotor =
       new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
-<<<<<<< HEAD
   private static final EV3ColorSensor lightSensor = new EV3ColorSensor(LocalEV3.get().getPort("S4"));
   public static final double WHEEL_RADIUS = 2.4;
   public static final double TRACK = 14.4;
   public static final double GRID_LENGTH = 30.48;
-=======
-
-  public static final double WHEEL_RADIUS = 2.4;
-  public static final double TRACK = 14.4;
->>>>>>> origin/master
 
   public static void main(String[] args) {
     int buttonChoice;
