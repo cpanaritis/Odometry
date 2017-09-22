@@ -31,7 +31,7 @@ public class OdometryCorrection extends Thread {
       lightSensor.fetchSample(LData, 0); // Get data from color sensor
       
       if (LData[0] != 13) {	//makes a sound when its not a regular tile (very primitive only used
-  	  	Sound.beep();		//for testing.
+  	  	Sound.beep();		//for testing. If there's not enough data read for the line it will not beep.
     }
       System.out.println(LData[0]);
       
