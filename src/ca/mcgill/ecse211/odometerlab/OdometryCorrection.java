@@ -33,8 +33,8 @@ public class OdometryCorrection extends Thread {
       //TODO Place correction implementation here
       colorSample.fetchSample(LData, 0); // Get data from color sensor
       scaledColor = LData[0]*1000;
-      lastPosition = new double[2];
-      update = new boolean[2];
+      lastPosition = new double[3];
+      update = new boolean[3];
       for(boolean data: update){
     	  data = false;
       }
