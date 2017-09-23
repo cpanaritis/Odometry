@@ -37,7 +37,7 @@ public class OdometryDisplay extends Thread {
       odometer.getPosition(position, new boolean[] {true, true, true});
 
       // Convert the angle from radiant to degrees as well as returning a value above 360 back to 0
-      position[2] = Math.toDegrees(position[2]);
+      position[2] = ((position[2]*180)/Math.PI);
       if (position[2] >=360) {
     	  	position[2] = position[2] % 360;
       }

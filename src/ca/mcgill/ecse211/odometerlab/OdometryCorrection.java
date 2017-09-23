@@ -13,10 +13,13 @@ public class OdometryCorrection extends Thread {
   private SampleProvider colorSample;
   private float scaledColor;
   private float[] LData;
-  private double[] lastPosition;
-  private boolean[] update;
+  private double[] lastPosition = new double[3];
+  private boolean[] update = new boolean[3];
   private boolean firstX = true;
   private boolean firstY = true;
+  private boolean firstNegativeX = true;
+  private boolean firstNegativeY = true;
+
 
   // constructor
   public OdometryCorrection(Odometer odometer, SampleProvider colorSample) {
@@ -33,8 +36,6 @@ public class OdometryCorrection extends Thread {
       //TODO Place correction implementation here
       colorSample.fetchSample(LData, 0); // Get data from color sensor
       scaledColor = LData[0]*1000;
-      lastPosition = new double[3];
-      update = new boolean[3];
       for(boolean data: update){
     	  data = false;
       }
@@ -42,41 +43,47 @@ public class OdometryCorrection extends Thread {
   	  	Sound.beep();		//for testing. If there's not enough data read for the line it will not beep.
   	  	if(odometer.getTheta() <= Math.PI/4){ //Update values for first side of square
   	  		update[1] = true;				// want to change y values
-  	  		if(firstY = true){				// if first line of y then y = 0
+  	  		if(firstY){	             		// if first line of y then y = 0
   	  			odometer.setY(0);
   	  			firstY = false;
   	  			odometer.getPosition(lastPosition, update);	// update our last position for next cycle
   	  		}
   	  		else{
   	  			lastPosition[1] += OdometryLab.GRID_LENGTH;
-	  			odometer.setPosition(lastPosition, update); // update y value
+	  			odometer.setY(lastPosition[1]); // update y value
   	  		}
-  	  		update[1] = false;
   	  	}
   	  	else if(odometer.getTheta() <= 3*Math.PI/4){
   	  		update[0] = true;			// want to change x values
-  	  		if(firstX = true){			// update values for 2nd side of square
+  	  		if(firstX){			// update values for 2nd side of square
   	  			odometer.setX(0);		// if first line of x then x = 0
   	  			firstX = false;
   	  			odometer.getPosition(lastPosition, update);	
   	  		}
   	  		else{
   	  			lastPosition[0] += OdometryLab.GRID_LENGTH;
-  	  			odometer.setPosition(lastPosition, update); // update x value
+  	  			odometer.setX(lastPosition[0]); // update x value
   	  		}
-  	  		update[0] = false;
   	  	}
   	  	else if(odometer.getTheta() <= 5*Math.PI/4){ //3rd side of square
-  	  		update[1] = true;
+  	  		if(firstNegativeY) {
+  	  			odometer.setY(lastPosition[1]);
+  	  			firstNegativeY = false;	
+  	  		}
+  	  		else {
   	  		lastPosition[1] -= OdometryLab.GRID_LENGTH;
-			odometer.setPosition(lastPosition, update);
-			update[1] = false;
+			odometer.setY(lastPosition[1]);
+  	  		}
   	  	}
   	  	else{
-  	  		update[0] = true;
+  	  		if(firstNegativeX) {
+  	  			odometer.setX(lastPosition[0]);
+  	  			firstNegativeX = false;
+  	  		}
+  	  		else {
   	  		lastPosition[0] -= OdometryLab.GRID_LENGTH;
-  	  		odometer.setPosition(lastPosition, update);
-  	  		update[0] = false;
+  	  		odometer.setX(lastPosition[0]);
+  	  		}
   	  	}
   	  	
       }      
