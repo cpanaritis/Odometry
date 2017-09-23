@@ -9,6 +9,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.robotics.SampleProvider;
 
 public class OdometryLab {
 
@@ -18,8 +19,8 @@ public class OdometryLab {
   private static final EV3LargeRegulatedMotor rightMotor =
       new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
   private static final EV3ColorSensor lightSensor = new EV3ColorSensor(LocalEV3.get().getPort("S4"));
-  public static final double WHEEL_RADIUS = 2.25;
-  public static final double TRACK = 14.3;
+  public static final double WHEEL_RADIUS = 2.1;
+  public static final double TRACK = 12.5;
   public static final double GRID_LENGTH = 30.48;
 
   public static void main(String[] args) {
@@ -28,7 +29,8 @@ public class OdometryLab {
     final TextLCD t = LocalEV3.get().getTextLCD();
     Odometer odometer = new Odometer(leftMotor, rightMotor);
     OdometryDisplay odometryDisplay = new OdometryDisplay(odometer, t);
-    OdometryCorrection odometryCorrection = new OdometryCorrection(odometer,lightSensor);
+    SampleProvider colorSample = lightSensor.getMode("Red");
+    OdometryCorrection odometryCorrection = new OdometryCorrection(odometer,colorSample);
 
     do {
       // clear the display

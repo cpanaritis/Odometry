@@ -10,30 +10,31 @@ import lejos.hardware.*;
 public class OdometryCorrection extends Thread {
   private static final long CORRECTION_PERIOD = 10;
   private Odometer odometer;
-  private EV3ColorSensor lightSensor;
+  private SampleProvider colorSample;
+  private float scaledColor;
   private float[] LData;
+  private double[] lastPosition;
 
   // constructor
-  public OdometryCorrection(Odometer odometer, EV3ColorSensor lightSensor) {
+  public OdometryCorrection(Odometer odometer, SampleProvider colorSample) {
     this.odometer = odometer;
-    this.lightSensor = lightSensor;
+    this.colorSample = colorSample;
   }
 
   // run method (required for Thread)
   public void run() {
     long correctionStart, correctionEnd;
-    SampleProvider colorSample = lightSensor.getMode("ColorID");
     LData = new float[colorSample.sampleSize()];
-    lightSensor.setFloodlight(true);
     while (true) {
       correctionStart = System.currentTimeMillis();
       //TODO Place correction implementation here
-      lightSensor.fetchSample(LData, 0); // Get data from color sensor
-      
-      if (LData[0] != 13) {	//makes a sound when its not a regular tile (very primitive only used
+      colorSample.fetchSample(LData, 0); // Get data from color sensor
+      scaledColor = LData[0]*1000;
+      lastPosition = new double[3];
+      if (scaledColor <= 300) {	//makes a sound when its not a regular tile (very primitive only used
   	  	Sound.beep();		//for testing. If there's not enough data read for the line it will not beep.
     }
-      System.out.println(LData[0]);
+      System.out.println(scaledColor);
       
       // this ensure the odometry correction occurs only once every period
       correctionEnd = System.currentTimeMillis();
