@@ -19,6 +19,7 @@ public class OdometryCorrection extends Thread {
   private boolean firstY = true;
   private boolean firstNegativeX = true;
   private boolean firstNegativeY = true;
+  private double[] averageLight = new double[7];
 
 
   // constructor
@@ -57,7 +58,7 @@ public class OdometryCorrection extends Thread {
   	  		update[0] = true;			// want to change x values
   	  		if(firstX){			// update values for 2nd side of square
   	  			odometer.setX(0);		// if first line of x then x = 0
-  	  			firstX = false;
+  	  			firstX = false; 
   	  			odometer.getPosition(lastPosition, update);	
   	  		}
   	  		else{
@@ -86,7 +87,7 @@ public class OdometryCorrection extends Thread {
   	  		}
   	  	}
   	  	
-      }      
+      } 
       
       // this ensure the odometry correction occurs only once every period
       correctionEnd = System.currentTimeMillis();
