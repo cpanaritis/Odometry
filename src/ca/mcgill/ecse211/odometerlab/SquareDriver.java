@@ -6,8 +6,8 @@ package ca.mcgill.ecse211.odometerlab;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 public class SquareDriver {
-  private static final int FORWARD_SPEED = 150;
-  private static final int ROTATE_SPEED = 150;
+  private static final int FORWARD_SPEED = 200;
+  private static final int ROTATE_SPEED = 100;
 
   public static void drive(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
       double leftRadius, double rightRadius, double width) {

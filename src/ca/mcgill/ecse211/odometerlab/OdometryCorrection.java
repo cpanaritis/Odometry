@@ -19,7 +19,8 @@ public class OdometryCorrection extends Thread {
   private boolean firstY = true;
   private boolean firstNegativeX = true;
   private boolean firstNegativeY = true;
-  private double[] averageLight = new double[7];
+  private float[] difference = new float[3];
+
 
 
   // constructor
@@ -40,7 +41,13 @@ public class OdometryCorrection extends Thread {
       for(boolean data: update){
     	  data = false;
       }
-      if (scaledColor <= 300) {	//makes a sound when its not a regular tile (very primitive only used
+      
+      /* derivative thing doesnt not work at the moment, if cannot make more precise start using this
+      difference[1] = difference[0];
+      difference[0] = scaledColor;
+      difference[2] = difference[1]-difference[0];*/
+      
+    	if (scaledColor <= 300) {	//makes a sound when its not a regular tile (very primitive only used
   	  	Sound.beep();		//for testing. If there's not enough data read for the line it will not beep.
   	  	if(odometer.getTheta() <= Math.PI/4){ //Update values for first side of square
   	  		update[1] = true;				// want to change y values
