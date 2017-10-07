@@ -47,7 +47,7 @@ public class OdometryCorrection extends Thread {
   	  			firstY = false;
   	  			lastY=0;
   	  		}
-  	  		else{
+  	  		else{	//otherwise add a grid length to the previous y value 
   	  			lastY += OdometryLab.GRID_LENGTH;
 	  			odometer.setY(lastY); // update y value
   	  		}
@@ -59,26 +59,26 @@ public class OdometryCorrection extends Thread {
   	  			lastX = 0;
   	  		}
   	  		else{
-  	  			lastX += OdometryLab.GRID_LENGTH;
+  	  			lastX += OdometryLab.GRID_LENGTH;	//otherwise add the grid length to the previous x value
   	  			odometer.setX(lastX); // update x value
   	  		}
   	  	}
   	  	else if(odometer.getTheta() <= 5*Math.PI/4){ //3rd side of square
-  	  		if(firstNegativeY) {
-  	  			odometer.setY(lastY);
+  	  		if(firstNegativeY) {		//if it is the first y then reset the y value to the last y from the other side
+  	  			odometer.setY(lastY);	
   	  			firstNegativeY = false;	
   	  		}
-  	  		else {
+  	  		else {		//otherwise remove a grid length from the y value.
   	  		lastY -= OdometryLab.GRID_LENGTH;
 			odometer.setY(lastY);
   	  		}
   	  	}
-  	  	else{
-  	  		if(firstNegativeX) {
+  	  	else{		//4th side of the square
+  	  		if(firstNegativeX) {		//if it is the first x then reset the x to the last x value assigned from side 2
   	  			odometer.setX(lastX);
   	  			firstNegativeX = false;
   	  		}
-  	  		else {
+  	  		else {		//otherwise remove a grid length from the x value
   	  		lastX -= OdometryLab.GRID_LENGTH;
   	  		odometer.setX(lastX);
   	  		}
